@@ -1,0 +1,13 @@
+.venv/
+cache/
+models/
+models_tflite/
+__pycache__/
+*.pyc
+*.npy
+*.tflite
+*.keras
+UCI HAR Dataset/
+UCI HAR Dataset.names
+__MACOSX/
+.DS_Store
