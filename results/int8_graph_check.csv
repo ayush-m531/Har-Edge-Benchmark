@@ -1,0 +1,5 @@
+model,tensors,float32_tensors_max,size_kb_mean,unrolled_cells,tensors_per_cell
+CNN-LSTM,1212,0,487.5,63,19.2
+CNN,24,0,60.7,0,
+LSTM,4871,0,2418.5,256,19.0
+MLP,13,0,160.6,0,

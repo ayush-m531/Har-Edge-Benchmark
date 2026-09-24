@@ -313,3 +313,24 @@ Outputs land in `results/`:
     edge_metrics_runs.csv  per-model edge measurements
     confusion_matrices/    one plot per architecture
     v1_valloss/            the earlier val_loss run, for comparison
+
+---
+
+## 10. Verifying the INT8 graph
+
+Every converted model was inspected after conversion (`src/inspect_int8.py`, output in `results/int8_graph_check.csv`).
+
+Conversion used strict `TFLITE_BUILTINS_INT8` with int8 input and output and no `SELECT_TF_OPS` fallback, so the converter fails rather than silently keeping a float op. Inspection confirms it: all 12 models contain **zero float32 tensors**.
+
+Tensor counts measure the unrolling overhead directly:
+
+| Model | Tensors | Unrolled cells | Tensors per cell | INT8 size |
+|---|---|---|---|---|
+| MLP | 13 | 0 | — | 160.6 KB |
+| CNN | 24 | 0 | — | 60.7 KB |
+| CNN-LSTM | 1,212 | 63 | 19.2 | 487.5 KB |
+| LSTM | 4,871 | 256 | 19.0 | 2418.5 KB |
+
+The LSTM has 128 timesteps and two stacked layers, so 256 unrolled cells. The CNN-LSTM pools the sequence to 63 steps before a single LSTM layer, so 63 cells.
+
+The tensor ratio between them is 4,871 / 1,212 = **4.02**, against a cell-count ratio of 256 / 63 = **4.06**. Each unrolled cell adds about 19 tensors, the same in both models. This confirms that the size growth under INT8 in section 6.2 comes from the per-timestep copies of the cell, not from the weights.

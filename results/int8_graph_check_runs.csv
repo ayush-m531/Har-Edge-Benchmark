@@ -1,0 +1,13 @@
+model,seed,tensors,float32_tensors,input_dtype,output_dtype,size_kb
+CNN-LSTM,0,1212,0,int8,int8,487.5
+CNN-LSTM,1,1212,0,int8,int8,487.5
+CNN-LSTM,2,1212,0,int8,int8,487.5
+CNN,0,24,0,int8,int8,60.7
+CNN,1,24,0,int8,int8,60.7
+CNN,2,24,0,int8,int8,60.7
+LSTM,0,4871,0,int8,int8,2392.1
+LSTM,1,4871,0,int8,int8,2431.7
+LSTM,2,4871,0,int8,int8,2431.7
+MLP,0,13,0,int8,int8,160.6
+MLP,1,13,0,int8,int8,160.6
+MLP,2,13,0,int8,int8,160.6
